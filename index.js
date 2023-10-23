@@ -1,11 +1,17 @@
 
+// named groups?
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet
 document.getElementById("myButton").onclick = function(){
 
     let carriage_return =/\n/g 
+    // const eos = /[!?.(.")]+(?=$)/gm
+    const eos = /(?=$)/gm
     
     let story = document.getElementById("myText").value;
     let ele_length = document.getElementById('story-length')
     let splitByCR = story.split(carriage_return)
+    let splitByEOS = story.split(eos)
+    console.log(splitByEOS)
   
     let splitStory = story.split(".")
     ele_length.innerHTML = "This story has about " + splitStory.length + " periods."
@@ -13,20 +19,35 @@ document.getElementById("myButton").onclick = function(){
     let htmlString = ''
     
     // BY SENTENCE 
-    for(let i=0;i<splitStory.length;i++){
-        if(i% 4 === 0){
-            htmlString += `<p></p>`
-        }
+    // for(let i=0;i<splitStory.length;i++){
+    //     if(i% 4 === 0){
+    //         htmlString += `<p></p>`
+    //     }
         
-        htmlString+=`<span><a class="btn" onclick='highlight(${i})'>${splitStory[i] + '.'}</a></span>  `
-    }
+    //     htmlString+=`<span><a class="btn" onclick='highlight(${i})'>${splitStory[i] + '.'}</a></span>  `
+    // }
 
     // UNCOMMENT TO GET THE BY PARAGRAPH OPTION
     // for(let i=0;i<splitByCR.length;i++){
     //     htmlString+=`<p><span><a class="btn" onclick='highlight(${i})'>${splitByCR[i]}  </a> </span></p>  `
     // }
 
+
+    for(let i=0;i<splitByEOS.length;i++){
+        if(i==1){
+            htmlString += `<p></p>`
+        }
+        if(i% 3 === 0){
+            htmlString += `<p></p>`
+        }
+        
+        htmlString+=`<span><a class="btn" onclick='highlight(${i})'>${splitByEOS[i]}</a></span>  `
+    }
+
+
     ele_story.innerHTML = htmlString
+    let ele_headline = document.getElementById('headline')
+    ele_headline.innerHTML = splitByEOS[0]
 }
 
 
