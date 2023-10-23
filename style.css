@@ -1,0 +1,17 @@
+body{
+    background-color: white
+}
+
+.highlight{
+    /* color: crimson; */
+    background-color: pink;
+}
+
+
+a:hover{
+color:blueviolet
+}
+
+a{
+    font-size: large;
+}
