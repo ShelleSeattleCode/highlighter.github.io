@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlighter</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="highlight.css">
 </head>
 <body>
-    <textarea name="" id="myText" cols="80" rows="50"></textarea>
-    <button  type="button" id="myButton">submit</button>
-    <hr>
+    <header> 
+        <h1>Simple Text Highlighter </h1>
+    </header>
+    <!-- <textarea name="" id="myText" cols="80" rows="50"></textarea> -->
+    <textarea name="" id="myText" cols="30" rows="10"></textarea>
+   
+    <button  type="button" id="myButton" class="block">Submit</button>
+<div>  
     <p id="story-length"></p>
     <p id="story-here"></p>
-    <button onclick="get_highlights()"> Get Highlights</button>
+   <button class="block" onclick="get_highlights()"> Get Highlights</button>
 
-<hr>
+ 
+
 
 <ol id="highlights-here"></ol>
-
-    <script src="index.js"></script>
+</div>
+    <script src="Highlighter.js"></script>
 
 </body>
 </html>
