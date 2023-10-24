@@ -4,20 +4,36 @@
 document.getElementById("myButton").onclick = function(){
 
     let carriage_return =/\n/g 
-    // const eos = /[!?.(.")]+(?=$)/gm
-    const eos = /(?=$)/gm
+    let checkPunc = /\p{P}/u
     
+    
+    const eos=/[!?.]+(?=$|\s)/gm
     let story = document.getElementById("myText").value;
     let ele_length = document.getElementById('story-length')
     let splitByCR = story.split(carriage_return)
     let splitByEOS = story.split(eos)
-    console.log(splitByEOS)
+     
+
+    let splitPunc = story.split(checkPunc)
+    console.log(splitPunc)
   
     let splitStory = story.split(".")
     ele_length.innerHTML = "This story has about " + splitStory.length + " periods."
     let ele_story = document.getElementById('story-here')
     let htmlString = ''
     
+    let i =0;
+    while(i<story.length){
+        if(eos.test(story[i])){
+            console.log('here')
+            story=story.replace(eos, story[i]+'#')
+        }
+        i+=1
+    }
+    let splitByAddHash = story.split('#')
+    console.log(splitByAddHash)
+
+
     // BY SENTENCE 
     // for(let i=0;i<splitStory.length;i++){
     //     if(i% 4 === 0){
@@ -33,7 +49,7 @@ document.getElementById("myButton").onclick = function(){
     // }
 
 
-    for(let i=0;i<splitByEOS.length;i++){
+    for(let i=0;i<splitByAddHash.length;i++){
         if(i==1){
             htmlString += `<p></p>`
         }
@@ -41,7 +57,7 @@ document.getElementById("myButton").onclick = function(){
             htmlString += `<p></p>`
         }
         
-        htmlString+=`<span><a class="btn" onclick='highlight(${i})'>${splitByEOS[i]}</a></span>  `
+        htmlString+=`<span><a class="btn" onclick='highlight(${i})'>${splitByAddHash[i]}</a></span>  `
     }
 
 
