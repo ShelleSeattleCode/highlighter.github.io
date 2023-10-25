@@ -1,7 +1,12 @@
 
-// named groups?
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet
+ 
+
+let obj = {}
+obj.highlight_arr = []
+// if(document.getElementsByTagName('header')){
+    // if(document.getElementById('myText')){
 document.getElementById("myButton").onclick = function(){
+
 
     let carriage_return =/\n/g 
     let checkPunc = /\p{P}/u
@@ -18,20 +23,25 @@ document.getElementById("myButton").onclick = function(){
     console.log(splitPunc)
   
     let splitStory = story.split(".")
-    ele_length.innerHTML = "This story has about " + splitStory.length + " periods."
+    ele_length.innerHTML = "This story has about " + splitStory.length + " sentences, give or take..."
     let ele_story = document.getElementById('story-here')
     let htmlString = ''
     
     let i =0;
     while(i<story.length){
         if(eos.test(story[i])){
-            console.log('here')
+            // console.log('here')
             story=story.replace(eos, story[i]+'#')
         }
         i+=1
     }
     let splitByAddHash = story.split('#')
-    console.log(splitByAddHash)
+    // console.log(splitByAddHash)
+    obj.headline = splitByAddHash[0]
+    obj.splitByAddHash = splitByAddHash
+
+    
+
 
 
     // BY SENTENCE 
@@ -51,37 +61,102 @@ document.getElementById("myButton").onclick = function(){
 
     for(let i=0;i<splitByAddHash.length;i++){
         if(i==1){
-            htmlString += `<p></p>`
+            htmlString += `<p>---</p>`
         }
         if(i% 3 === 0){
-            htmlString += `<p></p>`
+            htmlString += `<p>***</p>`
         }
         
-        htmlString+=`<span><a class="btn" onclick='highlight(${i})'>${splitByAddHash[i]}</a></span>  `
+        // htmlString+=`<span><a class="btn" onclick='highlight(${i})'> ${splitByAddHash[i]} </a></span>  `
+        htmlString+=`<span><a class='btn' onclick='highlight(${i})'> ${splitByAddHash[i]} </a></span>`
     }
-
 
     ele_story.innerHTML = htmlString
     let ele_headline = document.getElementById('headline')
-    ele_headline.innerHTML = splitByEOS[0]
+    ele_headline.innerHTML = splitByAddHash[0]
 }
 
 
 
 let highlight = function(param){
+    console.log('highlighting')
+    console.log(param)
+
   
     let sentence = document.getElementsByTagName('span').item(param)
+    console.log(sentence.textContent)
     sentence.classList.toggle("highlight")
+
+    obj.highlight_arr.push(sentence.textContent)
+
+    ///
+    // let highlights_arr = []
+    // for(let i=0;i<highlights.length; i++){
+    //     highlights_arr.push(highlights[i].textContent)
+       
+    // }
+
+    //     obj.highlights = highlights_arr
+
+
+        // console.log(obj)  
+        // to_archive_arr = JSON.parse(localStorage.getItem('story')) || []
+        // console.log(to_archive_arr.length)
+        // to_archive_arr.push(obj)
+        // localStorage.setItem('story', JSON.stringify(to_archive_arr))
+
+    ///
 }
+
+ 
 
 let get_highlights = function(){
+ 
+  
     let highlights = document.getElementsByClassName('highlight')
-    let ele_list = document.getElementById('highlights-here')
-    let html_hl = ''
-    for(let i=0;i<highlights.length; i++){
-        html_hl += `<li>${highlights[i].textContent}</li>`
-    }
+    highlights = obj.highlight_arr
+    console.log(highlights)
 
-    ele_list.innerHTML = html_hl
+    localStorage.setItem('recent_story', JSON.stringify(obj))
+    console.log('highlihgtssss')
+    window.location.href ="view_highlights.html"
+    // console.log(highlights)
+
+    // let ele_list = document.getElementById('highlights-here')
+    // let html_hl = ''
+    // let highlights_arr = []
+    // for(let i=0;i<highlights.length; i++){
+    //     highlights_arr.push(highlights[i].textContent)
+    //     html_hl += `<li>${highlights[i].textContent}</li>`
+    // }
+
+    // console.log(highlights_arr)
+    // ele_list.innerHTML = html_hl
+    obj.highlights = highlights_arr
+
+    ele_archive_option = document.getElementById('archive_option')
+    let htmlArchiveOption = `<button class='block' onclick="archive_highlights()">Save These Highlights?</button>`
+
+    ele_archive_option.innerHTML = htmlArchiveOption
  
 }
+
+
+let archive_highlights = function(){
+    console.log('arvhiving')
+    console.log(obj)  
+    to_archive_arr = JSON.parse(localStorage.getItem('story'))
+    to_archive_arr.push(obj)
+    localStorage.setItem('story', JSON.stringify(to_archive_arr))
+   
+ 
+}
+
+
+// }
+
+
+ 
+
+console.log(JSON.parse(localStorage.getItem('story')).length)
+console.log(JSON.parse(localStorage.getItem('story')))
