@@ -3,6 +3,8 @@
 
 let obj = {}
 obj.highlight_arr = []
+obj.notes =''
+obj.url = ''
 // if(document.getElementsByTagName('header')){
     // if(document.getElementById('myText')){
 document.getElementById("myButton").onclick = function(){
@@ -115,10 +117,11 @@ let get_highlights = function(){
   
     let highlights = document.getElementsByClassName('highlight')
     highlights = obj.highlight_arr
-    console.log(highlights)
+    console.log(obj)
+    // console.log(highlights)
 
     localStorage.setItem('recent_story', JSON.stringify(obj))
-    console.log('highlihgtssss')
+  
     window.location.href ="view_highlights.html"
     // console.log(highlights)
 
@@ -156,7 +159,11 @@ let archive_highlights = function(){
 // }
 
 
- 
+ let add_url = function(){
+    let url = document.getElementById('add-url').value
+    obj.url = url 
+    console.log(url)
+ }
 
 console.log(JSON.parse(localStorage.getItem('story')).length)
 console.log(JSON.parse(localStorage.getItem('story')))
