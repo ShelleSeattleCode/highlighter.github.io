@@ -14,31 +14,80 @@ document.getElementById("myButton").onclick = function(){
     let checkPunc = /\p{P}/u
     
     
-    const eos=/[!?.]+(?=$|\s)/gm
+    const eos=/[.]+(?=$|\s)/gm 
     let story = document.getElementById("myText").value;
     let ele_length = document.getElementById('story-length')
     let splitByCR = story.split(carriage_return)
     let splitByEOS = story.split(eos)
-     
+    let apostrophe = /'/
+    let question=/[?]+(?=$|\s)/gm 
+    let exclaim=/[!]+(?=$|\s)/gm 
+    // let quote =/[."]+(?=$|\s)/gm 
+    
+    
 
-    let splitPunc = story.split(checkPunc)
-    console.log(splitPunc)
+    
+     
+ 
+    // let splitPunc = story.split(checkPunc)
+    // console.log(splitPunc)
   
-    let splitStory = story.split(".")
-    ele_length.innerHTML = "This story has about " + splitStory.length + " sentences, give or take..."
+    // let splitStory = story.split(".")
+    // ele_length.innerHTML = "This story has about " + splitByAddHash.length + " sentences, give or take... "
+
+    // let ele_story = document.getElementById('story-here')
+    // let htmlString = ''
+    console.log(story.length)
+    // let i =0;
+
+ 
+
+    // . ? ! 
+    for(let i = 0; i<story.length; i++){
+        if(eos.test(story[i])){
+            console.log('eos')
+            // console.log(story[i])
+            story=story.replace(eos, story[i]+'#')
+
+         
+        }
+       else if(question.test(story[i])){
+        console.log('?')
+            story=story.replace(question, story[i]+'#')
+            // story[i] = '? #'
+            console.log(story.length)
+
+        }
+        else if(exclaim.test(story[i])){
+            console.log('!')
+            // story=story.replace(exclaim, story[i]+'#')
+            story[i] = '! #'
+            console.log(story.length)
+        }
+
+        else if(apostrophe.test(story[i])){
+            console.log("'")
+            story=story.replace(apostrophe, "\'")
+        }
+        // else if(quote.test(story[i])){
+        //     console.log(story[i])
+        //     story=story.replace(story[i], story[i] + '#')
+        // }
+    }
+
+
+    // console.log(story)
+
+    let splitByAddHash = story.split('#')
+    console.log(splitByAddHash)
+    splitByAddHash.pop()
+    console.log(splitByAddHash)
+
+    ele_length.innerHTML = "This story has about " + splitByAddHash.length + " sentences, give or take... "
+    
     let ele_story = document.getElementById('story-here')
     let htmlString = ''
-    
-    let i =0;
-    while(i<story.length){
-        if(eos.test(story[i])){
-            // console.log('here')
-            story=story.replace(eos, story[i]+'#')
-        }
-        i+=1
-    }
-    let splitByAddHash = story.split('#')
-    // console.log(splitByAddHash)
+
     obj.headline = splitByAddHash[0]
     obj.splitByAddHash = splitByAddHash
 
