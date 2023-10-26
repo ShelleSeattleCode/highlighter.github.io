@@ -20,9 +20,21 @@
   
 
     }
+
+    footer{
+        background-color: forestgreen;
+        padding: 30px;
+        background-size: cover;
+        color: blanchedalmond;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+        border-bottom: solid black;
+    }
     div {
         padding: 1%;
     }
+
+
      .block{
        
         width: 25%;
@@ -33,9 +45,37 @@
         color:blanchedalmond;
         font-size: 2rem; 
         text-align: center;
+       
     
     }  
+    .delete{
+        width: 7%;
+        height: 15%;
+        color:blanchedalmond;
+        background-size: cover;
+        background-color:hotpink;
+        font-size: 1rem;
+        text-align: center;
+    }
 
+
+    .star{
+        /* color:darkmagenta; */
+        text-decoration: underline;
+       
+    }
+
+    .star_button{
+        width: 7%;
+        height: 15%;
+        color:black;
+        background-size: cover;
+        background-color:yellow;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+  
   
 
      
@@ -46,6 +86,7 @@
         min-height: 300px;
         box-sizing: border-box;
         font-size: 1rem;
+        color: blue;
         resize: both;
         align-content: center;
         margin: 5px;
@@ -65,11 +106,11 @@
     }
     
     a{
-        font-size: 3rem
+        font-size: 1.5rem
     }
     
     li{
-        font-size: 3rem;
+        font-size: 1.5rem;
     }
 
 @media all and (max-width: 500px){
