@@ -1,8 +1,7 @@
- 
-console.log('high light archive')
+
 
 let obj = localStorage.getItem('recent_story') || {}
-console.log(obj)
+// console.log(obj)
 
 let get_stories = function(){
 
@@ -36,23 +35,19 @@ let get_info = function(param){
 
 
 let show_highlights = function(){
-    
-    console.log('show highlights')
  
 
     let ele_change = document.getElementById('change-headline')
-    // console.log(ele_change)
+ 
     let headline_string =`<label for="">Change Headline?</label><input id="update-headline" type="text"><button class="block" onclick="update_headline()">Update</button>`
-    // let headline_string = `<p>hello</p>`
+ 
 
     ele_change.innerHTML = headline_string
     // let highlights = JSON.parse(localStorage.getItem('recent_story'))
     let recent_story = JSON.parse(localStorage.getItem('recent_story'))
-    // console.log(recent_story.splitByAddHash[0)
-    // console.log(recent_story.highlight_arr)
+  
     console.log( recent_story.splitByAddHash[recent_story.splitByAddHash.length-1] )
-    // console.log(recent_story.url)
-//    console.log(JSON.parse(recent_story))
+  
 
 //
 
@@ -62,6 +57,7 @@ add_notes.innerHTML = htmlNotesSTring
 
 //
     let highlights = recent_story.highlight_arr
+    console.log(highlights)
     let ele_updated = document.getElementById('headline')
     ele_updated.innerHTML = recent_story.splitByAddHash[0]
     ele_author = document.getElementById('author')
@@ -71,15 +67,23 @@ add_notes.innerHTML = htmlNotesSTring
     let ele_list = document.getElementById('highlights-here')
     let html_hl = ''
     let highlights_arr = []
+    let apostrophe = /'/
+    let replacement_apostrophe = "'"
+    let sub = 'yes'
     for(let i=0;i<highlights.length; i++){
         highlights_arr.push(highlights[i])
-        html_hl += `<li>${highlights[i]}</li>`
+        // console.log(highlights[i].length)
+
+     
+        html_hl += `<li>${highlights[i]} <button class="star_button" onclick='star(${i})'>Star</button><button class = "delete" onclick='delete_highlight(${JSON.stringify(highlights[i])}, ${JSON.stringify(highlights)})'>delete</button></li>`
+
+
     }
     ele_list.innerHTML = html_hl
     obj.highlights = highlights_arr
 
     ele_archive_option = document.getElementById('archive_option')
-    let htmlArchiveOption = `<button class='block' onclick="archive_highlights()">Save These Highlights?</button>`
+    let htmlArchiveOption = `<button class='block'  onclick="archive_highlights()">Save These Highlights?</button>`
 
     ele_archive_option.innerHTML = htmlArchiveOption
 }
@@ -114,4 +118,38 @@ let ele_added_notes = document.getElementById('added-notes')
 ele_added_notes.innerHTML = `<p>Additional Notes: ${notes}</p>`
 
 console.log(notes)
+}
+
+
+let delete_highlight = function(param, arr){
+    // console.log(param)
+    let index = arr.indexOf(param)
+    console.log(param)
+    console.log(index)
+
+  let removeItem = arr.filter((item)=>{
+    return item != param
+  })
+
+  console.log(removeItem)
+}
+
+
+
+ 
+
+
+let star = function(param){
+    // console.log(param.toString())
+
+    // console.log(JSON.parse(param))
+
+    console.log('click')
+    console.log(param)
+  
+
+let li = document.getElementsByTagName('li').item(param)
+li.classList.toggle('star')
+
+
 }
