@@ -35,6 +35,11 @@
 
     }
 
+    .copy{
+        background-color: aquamarine;
+        
+    }
+
     #all-tags{
         font-style: italic;
     }
