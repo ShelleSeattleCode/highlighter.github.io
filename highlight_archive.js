@@ -328,3 +328,19 @@ let copy = function(){
 
     navigator.clipboard.writeText(text)
 }
+
+
+let add_url = function(){
+    let url  = document.getElementById('add-url').value
+
+    let ele_url = document.getElementById('url')
+    ele_url.innerHTML = url
+}
+
+
+let add_source = function(){
+    let source  = document.getElementById('add-source').value
+
+    let ele_source = document.getElementById('source')
+    ele_source.innerHTML = source
+}
