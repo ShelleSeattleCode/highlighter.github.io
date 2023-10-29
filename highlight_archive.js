@@ -25,14 +25,16 @@ ele_archive.innerHTML = htmlString2
 
 }
 
-// console.log(get_stories)
 
 let get_info = function(param){
     console.log(param)
  
 }
 
-
+function removeDuplicates(arr){
+    return arr.filter((item, 
+      index) => arr.indexOf(item) === index)
+  }
 
 let show_highlights = function(){
  
@@ -56,7 +58,8 @@ let htmlNotesSTring = ` <textarea name="" placeholder="Enter Your Notes Here" id
 add_notes.innerHTML = htmlNotesSTring
 
 //
-    let highlights = recent_story.highlight_arr
+    let highlights = removeDuplicates(recent_story.highlight_arr)
+
     console.log(highlights)
     let ele_updated = document.getElementById('headline')
     ele_updated.innerHTML = recent_story.splitByAddHash[0]
@@ -75,10 +78,11 @@ add_notes.innerHTML = htmlNotesSTring
         // console.log(highlights[i].length)
 
      
-        html_hl += `<li>${highlights[i]} <button class="star_button" onclick='star(${i})'>Star</button><button class = "delete" onclick='delete_highlight(${JSON.stringify(highlights[i])}, ${JSON.stringify(highlights)})'>delete</button></li>`
-
+        html_hl += `<li><a class="btn" onclick='star(${i})' >${highlights[i]} </a> <button class = "delete" onclick='delete_highlight(${i} )'>delete</button></li> <p class="tag-here" ></p>  `
 
     }
+
+
     ele_list.innerHTML = html_hl
     obj.highlights = highlights_arr
 
@@ -121,35 +125,96 @@ console.log(notes)
 }
 
 
-let delete_highlight = function(param, arr){
-    // console.log(param)
-    let index = arr.indexOf(param)
+let delete_highlight = function(param){
     console.log(param)
-    console.log(index)
+    // let index = arr.indexOf(param)
+    console.log(param)
+    let li = document.getElementsByTagName('li').item(param)
+   console.log(document.getElementsByTagName('li'))
 
-  let removeItem = arr.filter((item)=>{
-    return item != param
-  })
 
-  console.log(removeItem)
+    // li.remove()
+    // console.log(index)
+
+//   let removeItem = arr.filter((item)=>{
+//     return item != param
+//   })
+
+
 }
 
-
-
- 
-
-
 let star = function(param){
-    // console.log(param.toString())
 
-    // console.log(JSON.parse(param))
-
-    console.log('click')
-    console.log(param)
-  
-
+console.log(param)
 let li = document.getElementsByTagName('li').item(param)
 li.classList.toggle('star')
 
+console.log(li.textContent)
 
+let phrase = ''
+let i = 0;
+let hold = []
+const group_cap = /(?=[A-Z]+)/g
+const cap = /[A-Z]/g
+let lower_case = []
+let word = li.textContent.split(' ')
+// console.log(word)
+// console.log(li.textContent.length)
+
+new_word =[]
+for(let j = 0; j<word.length; j++){
+    if(word[j] !== ''){
+        new_word.push(word[j])
+    }
+}
+
+// console.log(new_word)
+while (i<=new_word.length){
+    if(group_cap.test(new_word[i])){
+        phrase+=new_word[i] + ' '
+    }
+
+    else if( !group_cap.test(new_word[i])){
+    //    console.log(new_word[i])
+        hold.push(phrase)
+        phrase = ''
+
+        if(new_word[i] == undefined){
+            // console.log('undefined')
+        }
+        else{
+            lower_case.push(new_word[i])
+        }
+    }
+
+    i+=1
+}
+
+let new_hold = []
+// let ele_tag = document.getElementById('tag-here')
+let ele_tag = document.getElementsByClassName('tag-here')
+let htmlTag = ''
+for(i=0;i<hold.length; i++){
+    if(hold[i] != ''){
+
+        new_hold.push(hold[i])
+           
+
+    }
+   
+}
+
+let tags = []
+
+for(i=0; i<new_hold.length; i++){
+    htmlTag += `<a class='btn'>${new_hold[i] +', '}</a> ` 
+ 
+    tags.push(new_hold[i])
+    
+}
+ 
+ele_tag[param].innerHTML = htmlTag
+ 
+ele_all = document.getElementById('all-tags')
+ele_all.innerHTML = tags
 }
