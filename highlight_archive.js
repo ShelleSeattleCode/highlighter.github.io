@@ -1,7 +1,7 @@
 
 
 let obj = localStorage.getItem('recent_story') || {}
-// console.log(obj)
+console.log(obj)
 
 let get_stories = function(){
 
@@ -11,7 +11,7 @@ let get_stories = function(){
 //  
 
 let ele_archive = document.getElementById('archive')
-let ele_headline = document.getElementById('headline')
+let ele_headline = document.getElementById('headline') 
 
 htmlString2 = ''
 // ele_headline.innerHTML = archive.headline
@@ -66,7 +66,7 @@ add_notes.innerHTML = htmlNotesSTring
 
     console.log(highlights)
     let ele_updated = document.getElementById('headline')
-    ele_updated.innerHTML = recent_story.splitByAddHash[0]
+    ele_updated.innerHTML = `${recent_story.splitByAddHash[0]} <button class = "copy" onclick="copy()"> &#128008 </button>` 
     ele_author = document.getElementById('author')
     ele_author.innerHTML =  'Possible author/pub: ' + recent_story.splitByAddHash[recent_story.splitByAddHash.length-1] 
     console.log(recent_story.url)
@@ -318,4 +318,13 @@ console.log(li.textContent)
 let hide_tag = function(param){
 let tag = document.getElementsByClassName('cap-tag').item(param)
 tag.classList.toggle('hide')
+}
+
+let copy = function(){
+    console.log('copy')
+
+    let text = document.getElementById('headline').textContent
+    // console.log(text.textContent)
+
+    navigator.clipboard.writeText(text)
 }
