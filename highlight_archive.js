@@ -60,6 +60,10 @@ add_notes.innerHTML = htmlNotesSTring
 //
     let highlights = removeDuplicates(recent_story.highlight_arr)
 
+    console.log(highlights.length)
+    let highlightsP = highlights.join()
+    console.log(highlightsP )
+
     console.log(highlights)
     let ele_updated = document.getElementById('headline')
     ele_updated.innerHTML = recent_story.splitByAddHash[0]
@@ -73,12 +77,92 @@ add_notes.innerHTML = htmlNotesSTring
     let apostrophe = /'/
     let replacement_apostrophe = "'"
     let sub = 'yes'
+
+    let insidePunc = /[,":;]/g  
+    const outsidePunc=/[.?!"]+(?=$|\s)/gm 
+
+
+    ////// strip certain punc
+
+    console.log(highlightsP)
+
+let index = highlightsP.search(insidePunc)
+let indexEOS = highlightsP.search(outsidePunc)
+
+
+let foo = function(){
+
+
+    while (index !=-1 && indexEOS !=-1){
+        highlightsP = highlightsP.replace(insidePunc, '')
+        highlightsP = highlightsP.replace(outsidePunc,'')
+        // console.log(highlightsP)
+        index = highlightsP.search(insidePunc)
+        indexEOS = highlightsP.search(outsidePunc)
+        console.log(index, indexEOS)
+
+    }
+return highlightsP.split(" ")
+ 
+}
+
+const group_cap = /(?=[A-Z]+)/g
+const cap = /[A-Z]/g
+
+
+
+let bar = function(){
+    let hold = []
+let phrase = ''
+
+    let i = 0;
+    while(i<=foo().length ){
+        if( group_cap.test(foo()[i])  ){
+            console.log(foo()[i][0])
+            phrase+= foo()[i] +" "
+        }
+        else{
+
+            if(phrase.length > 0){
+                hold.push(phrase)
+            }
+            phrase = ''
+        
+        }
+
+        i+=1
+    }
+    
+
+ 
+
+return removeDuplicates(hold)
+    }
+
+    console.log(bar())
+
+    let ele_all = document.getElementById('all-tags')
+    htmlAllTags = ''
+    for(let i=0;i<bar().length; i++){
+        htmlAllTags += `<a class='btn cap-tag' onclick="hide_tag(${i})"> ${bar()[i]}, </a>`
+    }
+
+ele_all.innerHTML = htmlAllTags
+
+
+// }
+
+
+
+        ////// strip certain punc
+
+
+
+
     for(let i=0;i<highlights.length; i++){
         highlights_arr.push(highlights[i])
         // console.log(highlights[i].length)
-
-     
-        html_hl += `<li><a class="btn" onclick='star(${i})' >${highlights[i]} </a> <button class = "delete" onclick='delete_highlight(${i} )'>delete</button></li> <p class="tag-here" ></p>  `
+        html_hl += `<li><a class="btn highlights-a" onclick='star(${i})' >${highlights[i]} </a> <button class = "delete" onclick='delete_highlight(${i} )'>delete</button></li> <p class="tag-here" ></p>  `
 
     }
 
@@ -90,18 +174,23 @@ add_notes.innerHTML = htmlNotesSTring
     let htmlArchiveOption = `<button class='block'  onclick="archive_highlights()">Save These Highlights?</button>`
 
     ele_archive_option.innerHTML = htmlArchiveOption
+
+
+
+    ////// possible tags
+    
+    
+
+    ///// possible tags
+ 
 }
  
 
-let archive_highlights = function(){
-    // console.log('arvhiving')
-    // console.log(obj)  
+let archive_highlights = function(){   
     let to_archive_arr = JSON.parse(localStorage.getItem('story')) || []
     to_archive_arr.push(JSON.parse(obj))
     localStorage.setItem('story', JSON.stringify(to_archive_arr))
-    console.log( to_archive_arr = JSON.parse(localStorage.getItem('story')).length)
-   
- 
+    console.log( to_archive_arr = JSON.parse(localStorage.getItem('story')).length)  
 }
 
 
@@ -151,70 +240,82 @@ li.classList.toggle('star')
 
 console.log(li.textContent)
 
-let phrase = ''
-let i = 0;
-let hold = []
-const group_cap = /(?=[A-Z]+)/g
-const cap = /[A-Z]/g
-let lower_case = []
-let word = li.textContent.split(' ')
-// console.log(word)
-// console.log(li.textContent.length)
+// let phrase = ''
+// let i = 0;
+// let hold = []
+// const group_cap = /(?=[A-Z]+)/g
+// const cap = /[A-Z]/g
+// let lower_case = []
+// let word = li.textContent.split(' ')
+// // console.log(word)
+// // console.log(li.textContent.length)
 
-new_word =[]
-for(let j = 0; j<word.length; j++){
-    if(word[j] !== ''){
-        new_word.push(word[j])
-    }
-}
+// new_word =[]
+// for(let j = 0; j<word.length; j++){
+//     if(word[j] !== ''){
+//         new_word.push(word[j])
+//     }
+// }
 
-// console.log(new_word)
-while (i<=new_word.length){
-    if(group_cap.test(new_word[i])){
-        phrase+=new_word[i] + ' '
-    }
+// while (i<=new_word.length){
+//     if(group_cap.test(new_word[i])){
+//         phrase+=new_word[i] + ' '
+//     }
 
-    else if( !group_cap.test(new_word[i])){
-    //    console.log(new_word[i])
-        hold.push(phrase)
-        phrase = ''
+//     else if( !group_cap.test(new_word[i])){
+//     //    console.log(new_word[i])
+//         hold.push(phrase)
+//         phrase = ''
 
-        if(new_word[i] == undefined){
-            // console.log('undefined')
-        }
-        else{
-            lower_case.push(new_word[i])
-        }
-    }
+//         if(new_word[i] == undefined){
+//             // console.log('undefined')
+//         }
+//         else{
+//             lower_case.push(new_word[i])
+//         }
+//     }
 
-    i+=1
-}
+//     i+=1
 
-let new_hold = []
-// let ele_tag = document.getElementById('tag-here')
-let ele_tag = document.getElementsByClassName('tag-here')
-let htmlTag = ''
-for(i=0;i<hold.length; i++){
-    if(hold[i] != ''){
 
-        new_hold.push(hold[i])
+// }
+
+// let new_hold = []
+// // let ele_tag = document.getElementById('tag-here')
+// let ele_tag = document.getElementsByClassName('tag-here')
+// let htmlTag = ''
+// for(i=0;i<hold.length; i++){
+//     if(hold[i] != ''){
+
+//         new_hold.push(hold[i])
            
 
-    }
+
+//     }
    
-}
+// }
 
-let tags = []
+// let tags = []
 
-for(i=0; i<new_hold.length; i++){
-    htmlTag += `<a class='btn'>${new_hold[i] +', '}</a> ` 
+// for(i=0; i<new_hold.length; i++){
+//     htmlTag += `<a class='btn'>${new_hold[i] +', '}</a> ` 
  
-    tags.push(new_hold[i])
+//     tags.push(new_hold[i])
     
+// }
+ 
+// ele_tag[param].innerHTML = htmlTag
+ 
+// ele_all = document.getElementById('all-tags')
+// ele_all.innerHTML = tags
+
+
+
+
 }
- 
-ele_tag[param].innerHTML = htmlTag
- 
-ele_all = document.getElementById('all-tags')
-ele_all.innerHTML = tags
+
+
+let hide_tag = function(param){
+let tag = document.getElementsByClassName('cap-tag').item(param)
+tag.classList.toggle('hide')
 }
