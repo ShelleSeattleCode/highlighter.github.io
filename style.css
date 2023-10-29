@@ -32,6 +32,14 @@
     }
     div {
         padding: 1%;
+
+    }
+
+    #all-tags{
+        font-style: italic;
+    }
+    .hide{
+        display: none;
     }
 
 
@@ -48,6 +56,8 @@
        
     
     }  
+
+    
     .delete{
         width: 7%;
         height: 15%;
