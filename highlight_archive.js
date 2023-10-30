@@ -118,7 +118,7 @@ let phrase = ''
     let i = 0;
     while(i<=foo().length ){
         if( group_cap.test(foo()[i])  ){
-            console.log(foo()[i][0])
+          
             phrase+= foo()[i] +" "
         }
         else{
