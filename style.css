@@ -152,7 +152,7 @@
 
     .block:hover{
         background-color: blue;
-    } */
+    }
      
     textarea{
         background-color: blanchedalmond;
@@ -170,7 +170,8 @@
     
     
     a:hover{
-        color:blueviolet
+        color:blueviolet;
+        text-decoration: underline;
     }
     
     a{
