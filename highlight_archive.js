@@ -1,13 +1,13 @@
 
 
 let obj = localStorage.getItem('recent_story') || {}
-console.log(obj)
+// console.log(obj)
 
 let get_stories = function(){
 
     console.log('getting stories')
     let archive = JSON.parse(localStorage.getItem('story'))
-    console.log(archive)
+    // console.log(archive)
 //  
 
 let ele_archive = document.getElementById('archive')
@@ -139,7 +139,7 @@ let phrase = ''
 return removeDuplicates(hold)
     }
 
-    console.log(bar())
+    // console.log(bar())
 
     let ele_all = document.getElementById('all-tags')
     htmlAllTags = ''
@@ -220,6 +220,7 @@ let delete_highlight = function(param){
     console.log(param)
     let li = document.getElementsByTagName('li').item(param)
    console.log(document.getElementsByTagName('li'))
+    li.classList.toggle('hide')
 
 
     // li.remove()
